@@ -4,6 +4,12 @@ on:
   release:
     types:
       - published
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing stable release tag to retry
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -14,10 +20,10 @@ concurrency:
 
 jobs:
   publish:
-    name: Publish ${{ github.event.release.tag_name }}
+    name: Publish ${{ github.event.release.tag_name || inputs.release_tag }}
     if: >-
       github.repository == 'istarwyh/dsh-pomodoro' &&
-      github.event.release.prerelease == false
+      (github.event_name == 'workflow_dispatch' || github.event.release.prerelease == false)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -28,7 +34,7 @@ jobs:
       - name: Checkout release tag
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ github.event.release.tag_name || inputs.release_tag }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -42,7 +48,7 @@ jobs:
       - name: Verify release source
         shell: pwsh
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.release_tag }}
         run: |
           $ErrorActionPreference = "Stop"
 
