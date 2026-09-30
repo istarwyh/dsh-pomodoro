@@ -118,7 +118,7 @@ dsh web
 
 ## 设置与提醒
 
-在 DSH 的“设置 → 插件 → 插件配置 → 番茄钟”中展开卡片即可修改：
+在 DSH 0.1.7+ 中，打开“插件 → dsh-pomodoro → dsh-pomodoro → 配置”；在此前已验证的 rc 宿主中，仍从“设置 → 插件 → 插件配置 → 番茄钟”进入。
 
 | 设置 | 默认值 | 作用 |
 |---|---:|---|
@@ -194,7 +194,7 @@ npm pack --dry-run
 
 | 路径 | 职责 |
 |---|---|
-| `lib/index.js` | Node/Cordis 入口、官方设置分节与只读配置降级通道（新宿主 GET 路由 / 老宿主 loopback RPC） |
+| `lib/index.js` | Node/Cordis 入口、Loader 设置兼容层与只读配置降级通道（新宿主 GET 路由 / 老宿主 loopback RPC） |
 | `lib/client.js` | 浏览器计时引擎、React UI、slot 注册、locale 文案和设置同步 |
 | `assets/sounds/deep-ding.mp3` | CC0 低沉提示音源文件；运行时字节嵌入客户端 bundle |
 | `docs/images/` | 中英文 README 截图与 GitHub Social Preview 图片 |

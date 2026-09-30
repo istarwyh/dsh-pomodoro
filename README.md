@@ -118,7 +118,7 @@ Click the sidebar 🍅 button to open or close the panel. Drag the title bar to 
 
 ## Settings and Notifications
 
-Open **Settings → Plugins → Plugin configuration → Pomodoro** in DSH to configure:
+On DSH 0.1.7+, open **Plugins → dsh-pomodoro → dsh-pomodoro → Configure**. On earlier verified rc hosts, use **Settings → Plugins → Plugin configuration → Pomodoro**.
 
 | Setting | Default | Behavior |
 |---|---:|---|
@@ -194,7 +194,7 @@ The project has no build step: `lib/client.js` is the browser bundle that is pub
 
 | Path | Responsibility |
 |---|---|
-| `lib/index.js` | Node/Cordis entry point, official settings section, and the read-only config fallback channel (GET route on current hosts / loopback RPC on older hosts) |
+| `lib/index.js` | Node/Cordis entry point, Loader-backed settings compatibility, and the read-only config fallback channel (GET route on current hosts / loopback RPC on older hosts) |
 | `lib/client.js` | Browser timer engine, React UI, slot registration, locale messages, and settings synchronization |
 | `assets/sounds/deep-ding.mp3` | Source for the CC0 completion sound; its runtime bytes are embedded in the client bundle |
 | `docs/images/` | Chinese and English README screenshots plus the GitHub Social Preview image |
