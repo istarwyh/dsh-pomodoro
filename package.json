@@ -1,15 +1,15 @@
 {
-  "name": "dsh-pomodoro",
+  "name": "@xiaohui-wang/dsh-pomodoro",
   "description": "A DeepSeek Harness Web Pomodoro plugin with configurable focus and break intervals, sidebar access, and a draggable floating panel",
   "version": "0.5.4",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/causebefore/dsh-pomodoro.git"
+    "url": "git+https://github.com/istarwyh/dsh-pomodoro.git"
   },
   "bugs": {
-    "url": "https://github.com/causebefore/dsh-pomodoro/issues"
+    "url": "https://github.com/istarwyh/dsh-pomodoro/issues"
   },
-  "homepage": "https://github.com/causebefore/dsh-pomodoro#readme",
+  "homepage": "https://github.com/istarwyh/dsh-pomodoro#readme",
   "keywords": [
     "deepseek",
     "deepseek-harness",

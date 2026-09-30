@@ -10,16 +10,16 @@
 </p>
 
 <p>
-  <a href="https://www.npmjs.com/package/dsh-pomodoro"><img alt="npm 版本" src="https://img.shields.io/npm/v/dsh-pomodoro.svg?logo=npm"></a>
-  <a href="https://www.npmjs.com/package/dsh-pomodoro"><img alt="npm 月下载量" src="https://img.shields.io/npm/d18m/dsh-pomodoro.svg"></a>
-  <a href="https://www.npmjs.com/package/dsh-pomodoro"><img alt="Node.js 版本" src="https://img.shields.io/node/v/dsh-pomodoro.svg?logo=node.js"></a>
+  <a href="https://www.npmjs.com/package/@xiaohui-wang/dsh-pomodoro"><img alt="npm 版本" src="https://img.shields.io/npm/v/%40xiaohui-wang%2Fdsh-pomodoro.svg?logo=npm"></a>
+  <a href="https://www.npmjs.com/package/@xiaohui-wang/dsh-pomodoro"><img alt="npm 月下载量" src="https://img.shields.io/npm/d18m/%40xiaohui-wang%2Fdsh-pomodoro.svg"></a>
+  <a href="https://www.npmjs.com/package/@xiaohui-wang/dsh-pomodoro"><img alt="Node.js 版本" src="https://img.shields.io/node/v/%40xiaohui-wang%2Fdsh-pomodoro.svg?logo=node.js"></a>
   <a href="https://github.com/deepseek-ai/deepseek-harness"><img alt="DSH rc 版本" src="https://img.shields.io/badge/DSH-rc%20releases-4B8BF5"></a>
   <a href="https://github.com/awesome-dsh-plugin/awesome-dsh-plugin"><img alt="Awesome DSH Plugin" src="https://awesome-dsh-plugin.com/badge.svg"></a>
-  <a href="https://github.com/causebefore/dsh-pomodoro/blob/main/LICENSE"><img alt="MIT 许可证" src="https://img.shields.io/npm/l/dsh-pomodoro.svg"></a>
+  <a href="https://github.com/istarwyh/dsh-pomodoro/blob/main/LICENSE"><img alt="MIT 许可证" src="https://img.shields.io/npm/l/%40xiaohui-wang%2Fdsh-pomodoro.svg"></a>
 </p>
 
 <p>
-  <img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-demo.gif" alt="演示：专注阶段倒计时走动，阶段结束提醒出现并自动进入休息，随后自动开始下一轮专注，最后面板收起为迷你模式" width="560">
+  <img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-demo.gif" alt="演示：专注阶段倒计时走动，阶段结束提醒出现并自动进入休息，随后自动开始下一轮专注，最后面板收起为迷你模式" width="560">
 </p>
 
 <p>
@@ -33,7 +33,9 @@
 
 </div>
 
-> **兼容性提示：** DeepSeek Harness 目前迭代迅速，本插件仅跟进 rc 版本：开发与验证均以 rc 基线为准，不承诺支持 alpha 等中间预发布。每个发布版本适配的 DSH 版本都在 [Releases](https://github.com/causebefore/dsh-pomodoro/releases) 说明中注明；升级 DSH 后，请先对照 Release 说明确认插件兼容性。
+> **独立 fork 包：** `@xiaohui-wang/dsh-pomodoro` 由本 fork 独立维护和发布，基于 [causebefore/dsh-pomodoro](https://github.com/causebefore/dsh-pomodoro)。包内继续使用 `dsh-pomodoro` 标识，以兼容已有设置；请勿与未加 scope 的 `dsh-pomodoro` 同时安装。
+
+> **兼容性提示：** DeepSeek Harness 目前迭代迅速，本插件仅跟进 rc 版本：开发与验证均以 rc 基线为准，不承诺支持 alpha 等中间预发布。每个发布版本适配的 DSH 版本都在 [Releases](https://github.com/istarwyh/dsh-pomodoro/releases) 说明中注明；升级 DSH 后，请先对照 Release 说明确认插件兼容性。
 
 ## 界面预览
 
@@ -45,21 +47,21 @@
     <th align="center">深色主题</th>
   </tr>
   <tr>
-    <td align="center"><img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-light.png" alt="浅色主题下的番茄钟浮动面板" width="250"></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-dark.png" alt="深色主题下的番茄钟浮动面板" width="250"></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-light.png" alt="浅色主题下的番茄钟浮动面板" width="250"></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-dark.png" alt="深色主题下的番茄钟浮动面板" width="250"></td>
   </tr>
 </table>
 
 ### 迷你模式
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-mini.png" alt="只显示阶段、倒计时和主要控制的迷你番茄钟" width="186">
+  <img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-mini.png" alt="只显示阶段、倒计时和主要控制的迷你番茄钟" width="186">
 </p>
 
 ### 设置页面
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-settings.png" alt="DSH 插件配置中的番茄钟设置卡片" width="580">
+  <img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-settings.png" alt="DSH 插件配置中的番茄钟设置卡片" width="580">
 </p>
 
 ## 功能亮点
@@ -87,7 +89,7 @@
 将插件安装到 `web` profile：
 
 ```powershell
-dsh plugin --profile web add dsh-pomodoro
+dsh plugin --profile web add @xiaohui-wang/dsh-pomodoro
 ```
 
 安装后启动或重启 DSH Web：
@@ -102,8 +104,8 @@ dsh web
 
 不想离开 Web 界面？两个社区伴侣插件都可以代劳：
 
-- **[dsh-market](https://github.com/dsh-market/dsh-market)**：先执行 `dsh plugin --profile web add dshmarket` 并重启 `dsh web`，然后打开“设置 → 插件市场”，搜索 `dsh-pomodoro` 一键安装，刷新页面即可使用。
-- **[dsh-find-plugin](https://github.com/awesome-dsh-plugin/dsh-find-plugin)**：先执行 `dsh plugin --profile web add dsh-find-plugin` 并重启 `dsh web`，然后直接对话“帮我安装 dsh-pomodoro 插件到 dsh”，agent 会搜索并完成安装，结束后刷新浏览器即可。
+- **[dsh-market](https://github.com/dsh-market/dsh-market)**：先执行 `dsh plugin --profile web add dshmarket` 并重启 `dsh web`，然后打开“设置 → 插件市场”，搜索 `@xiaohui-wang/dsh-pomodoro` 一键安装，刷新页面即可使用。
+- **[dsh-find-plugin](https://github.com/awesome-dsh-plugin/dsh-find-plugin)**：先执行 `dsh plugin --profile web add dsh-find-plugin` 并重启 `dsh web`，然后直接对话“帮我安装 @xiaohui-wang/dsh-pomodoro 插件到 dsh”，agent 会搜索并完成安装，结束后刷新浏览器即可。
 
 ## 基本使用
 
@@ -145,10 +147,10 @@ dsh web
 
 ```powershell
 # 更新插件
-dsh plugin --profile web update dsh-pomodoro
+dsh plugin --profile web update @xiaohui-wang/dsh-pomodoro
 
 # 移除插件
-dsh plugin --profile web remove dsh-pomodoro
+dsh plugin --profile web remove @xiaohui-wang/dsh-pomodoro
 ```
 
 执行后重启 `dsh web`。
@@ -159,14 +161,14 @@ dsh plugin --profile web remove dsh-pomodoro
 |---|---|
 | 安装或更新时报 `'pnpm' 不是内部或外部命令` | `dsh plugin` 依赖 PATH 上的 pnpm：执行 `npm install -g pnpm` 后重试 |
 | `dsh web` 启动失败，提示端口 3080 被占用 | 上一个实例仍在运行或已残留：用 `netstat -ano \| findstr :3080` 找到 PID，`taskkill /PID <pid> /F` 结束后重启 |
-| 侧栏没有 🍅 按钮 | 确认使用 `web` profile 且已执行 `dsh plugin --profile web add dsh-pomodoro`，然后重启 `dsh web` |
+| 侧栏没有 🍅 按钮 | 确认使用 `web` profile 且已执行 `dsh plugin --profile web add @xiaohui-wang/dsh-pomodoro`，然后重启 `dsh web` |
 | 系统通知不出现 | 检查浏览器站点通知权限并保持 DSH 页面打开，详见[完成提醒](#完成提醒) |
 
 ## 相关链接
 
-- [npm 包](https://www.npmjs.com/package/dsh-pomodoro)
-- [版本发布](https://github.com/causebefore/dsh-pomodoro/releases)
-- [问题反馈](https://github.com/causebefore/dsh-pomodoro/issues)
+- [npm 包](https://www.npmjs.com/package/@xiaohui-wang/dsh-pomodoro)
+- [版本发布](https://github.com/istarwyh/dsh-pomodoro/releases)
+- [问题反馈](https://github.com/istarwyh/dsh-pomodoro/issues)
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 
 ## License
@@ -181,7 +183,7 @@ dsh plugin --profile web remove dsh-pomodoro
 ### 本地开发
 
 ```powershell
-git clone https://github.com/causebefore/dsh-pomodoro.git
+git clone https://github.com/istarwyh/dsh-pomodoro.git
 Set-Location dsh-pomodoro
 dsh plugin --profile web add .
 npm run check

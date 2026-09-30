@@ -16,7 +16,7 @@ test("客户端声明同时覆盖 rc.2 runtime 与 alpha.2 renderer", () => {
 test("设置服务不再是客户端硬依赖，0.1.7 Loader row 与旧 namespace 对齐", () => {
   assert.match(clientSource, /exports\.inject = \["timer", "slots", "locale", "connection"\]/);
   assert.doesNotMatch(clientSource, /exports\.inject = \[[^\]]*"settingsScope"/);
-  assert.match(bundlePatch, /- id: dsh-pomodoro\n\s+name: dsh-pomodoro/);
+  assert.match(bundlePatch, /- id: dsh-pomodoro\n\s+name: "@xiaohui-wang\/dsh-pomodoro"/);
 });
 
 test("peer 只保留直接使用的 Host 公共契约，并覆盖历次适配的 settings 版本", () => {

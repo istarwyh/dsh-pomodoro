@@ -16,7 +16,7 @@ jobs:
   publish:
     name: Publish ${{ github.event.release.tag_name }}
     if: >-
-      github.repository == 'causebefore/dsh-pomodoro' &&
+      github.repository == 'istarwyh/dsh-pomodoro' &&
       github.event.release.prerelease == false
     runs-on: ubuntu-latest
     timeout-minutes: 10
