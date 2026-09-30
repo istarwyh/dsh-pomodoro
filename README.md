@@ -10,16 +10,16 @@
 </p>
 
 <p>
-  <a href="https://www.npmjs.com/package/dsh-pomodoro"><img alt="npm version" src="https://img.shields.io/npm/v/dsh-pomodoro.svg?logo=npm"></a>
-  <a href="https://www.npmjs.com/package/dsh-pomodoro"><img alt="npm monthly downloads" src="https://img.shields.io/npm/d18m/dsh-pomodoro.svg"></a>
-  <a href="https://www.npmjs.com/package/dsh-pomodoro"><img alt="Node.js version" src="https://img.shields.io/node/v/dsh-pomodoro.svg?logo=node.js"></a>
+  <a href="https://www.npmjs.com/package/@xiaohui-wang/dsh-pomodoro"><img alt="npm version" src="https://img.shields.io/npm/v/%40xiaohui-wang%2Fdsh-pomodoro.svg?logo=npm"></a>
+  <a href="https://www.npmjs.com/package/@xiaohui-wang/dsh-pomodoro"><img alt="npm monthly downloads" src="https://img.shields.io/npm/d18m/%40xiaohui-wang%2Fdsh-pomodoro.svg"></a>
+  <a href="https://www.npmjs.com/package/@xiaohui-wang/dsh-pomodoro"><img alt="Node.js version" src="https://img.shields.io/node/v/%40xiaohui-wang%2Fdsh-pomodoro.svg?logo=node.js"></a>
   <a href="https://github.com/deepseek-ai/deepseek-harness"><img alt="DSH rc releases" src="https://img.shields.io/badge/DSH-rc%20releases-4B8BF5"></a>
   <a href="https://github.com/awesome-dsh-plugin/awesome-dsh-plugin"><img alt="Awesome DSH Plugin" src="https://awesome-dsh-plugin.com/badge.svg"></a>
-  <a href="https://github.com/causebefore/dsh-pomodoro/blob/main/LICENSE"><img alt="MIT license" src="https://img.shields.io/npm/l/dsh-pomodoro.svg"></a>
+  <a href="https://github.com/istarwyh/dsh-pomodoro/blob/main/LICENSE"><img alt="MIT license" src="https://img.shields.io/npm/l/%40xiaohui-wang%2Fdsh-pomodoro.svg"></a>
 </p>
 
 <p>
-  <img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-demo.gif" alt="Demo: a focus phase runs down, a completion reminder appears, the break starts automatically, the next focus session follows, and the panel collapses into mini mode" width="560">
+  <img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-demo.gif" alt="Demo: a focus phase runs down, a completion reminder appears, the break starts automatically, the next focus session follows, and the panel collapses into mini mode" width="560">
 </p>
 
 <p>
@@ -33,7 +33,9 @@
 
 </div>
 
-> **Compatibility:** DeepSeek Harness is evolving quickly, so this plugin tracks rc releases only: development and verification target rc baselines, with no commitment to intermediate prereleases such as alpha. The DSH version each release targets is noted in its [Releases](https://github.com/causebefore/dsh-pomodoro/releases) notes; after upgrading DSH, confirm compatibility against the release notes.
+> **Independent fork package:** `@xiaohui-wang/dsh-pomodoro` is maintained and published from this fork, based on [causebefore/dsh-pomodoro](https://github.com/causebefore/dsh-pomodoro). It keeps the internal `dsh-pomodoro` identity so existing settings remain compatible. Do not install it alongside the unscoped `dsh-pomodoro` package.
+
+> **Compatibility:** DeepSeek Harness is evolving quickly, so this plugin tracks rc releases only: development and verification target rc baselines, with no commitment to intermediate prereleases such as alpha. The DSH version each release targets is noted in its [Releases](https://github.com/istarwyh/dsh-pomodoro/releases) notes; after upgrading DSH, confirm compatibility against the release notes.
 
 ## Interface Preview
 
@@ -45,21 +47,21 @@ Supports light and dark themes, a compact mini mode, and configuration through D
     <th align="center">Dark theme</th>
   </tr>
   <tr>
-    <td align="center"><img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-light-en.png" alt="Pomodoro floating panel in the light theme" width="250"></td>
-    <td align="center"><img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-dark-en.png" alt="Pomodoro floating panel in the dark theme" width="250"></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-light-en.png" alt="Pomodoro floating panel in the light theme" width="250"></td>
+    <td align="center"><img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-dark-en.png" alt="Pomodoro floating panel in the dark theme" width="250"></td>
   </tr>
 </table>
 
 ### Mini mode
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-mini-en.png" alt="Mini Pomodoro panel showing only the phase, countdown, and primary control" width="186">
+  <img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-mini-en.png" alt="Mini Pomodoro panel showing only the phase, countdown, and primary control" width="186">
 </p>
 
 ### Settings
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/causebefore/dsh-pomodoro/main/docs/images/pomodoro-settings-en.png" alt="Pomodoro settings card in DSH plugin settings" width="580">
+  <img src="https://raw.githubusercontent.com/istarwyh/dsh-pomodoro/main/docs/images/pomodoro-settings-en.png" alt="Pomodoro settings card in DSH plugin settings" width="580">
 </p>
 
 ## Highlights
@@ -87,7 +89,7 @@ Supports light and dark themes, a compact mini mode, and configuration through D
 Install the plugin into the `web` profile:
 
 ```powershell
-dsh plugin --profile web add dsh-pomodoro
+dsh plugin --profile web add @xiaohui-wang/dsh-pomodoro
 ```
 
 Then start or restart DSH Web:
@@ -102,8 +104,8 @@ The plugin is loaded when the 🍅 button appears at the bottom of the sidebar.
 
 Prefer staying in the Web UI? Two community companions can install this plugin for you:
 
-- **[dsh-market](https://github.com/dsh-market/dsh-market)** — install it once with `dsh plugin --profile web add dshmarket` and restart `dsh web`, then open **Settings → Plugin Market**, search for `dsh-pomodoro`, and install it with one click. The plugin goes live after a page refresh.
-- **[dsh-find-plugin](https://github.com/awesome-dsh-plugin/dsh-find-plugin)** — install it once with `dsh plugin --profile web add dsh-find-plugin` and restart `dsh web`, then just tell the agent: "install the dsh-pomodoro plugin for DSH". It finds the plugin and runs the install for you; refresh the browser when it finishes.
+- **[dsh-market](https://github.com/dsh-market/dsh-market)** — install it once with `dsh plugin --profile web add dshmarket` and restart `dsh web`, then open **Settings → Plugin Market**, search for `@xiaohui-wang/dsh-pomodoro`, and install it with one click. The plugin goes live after a page refresh.
+- **[dsh-find-plugin](https://github.com/awesome-dsh-plugin/dsh-find-plugin)** — install it once with `dsh plugin --profile web add dsh-find-plugin` and restart `dsh web`, then just tell the agent: "install the @xiaohui-wang/dsh-pomodoro plugin for DSH". It finds the plugin and runs the install for you; refresh the browser when it finishes.
 
 ## Usage
 
@@ -118,7 +120,7 @@ Click the sidebar 🍅 button to open or close the panel. Drag the title bar to 
 
 ## Settings and Notifications
 
-Open **Settings → Plugins → Plugin configuration → Pomodoro** in DSH to configure:
+On DSH 0.1.7+, open **Plugins → dsh-pomodoro → dsh-pomodoro → Configure**. On earlier verified rc hosts, use **Settings → Plugins → Plugin configuration → Pomodoro**.
 
 | Setting | Default | Behavior |
 |---|---:|---|
@@ -145,10 +147,10 @@ System notifications require DSH to be served from `localhost`, `127.0.0.1`, or 
 
 ```powershell
 # Update the plugin
-dsh plugin --profile web update dsh-pomodoro
+dsh plugin --profile web update @xiaohui-wang/dsh-pomodoro
 
 # Remove the plugin
-dsh plugin --profile web remove dsh-pomodoro
+dsh plugin --profile web remove @xiaohui-wang/dsh-pomodoro
 ```
 
 Restart `dsh web` after either command.
@@ -159,14 +161,14 @@ Restart `dsh web` after either command.
 |---|---|
 | `'pnpm' is not recognized` during install or update | `dsh plugin` forwards to pnpm on PATH: run `npm install -g pnpm` and retry |
 | `dsh web` fails to start because port 3080 is in use | A previous instance is still running: find the PID with `netstat -ano \| findstr :3080`, end it with `taskkill /PID <pid> /F`, then restart |
-| No 🍅 button in the sidebar | Confirm you are on the `web` profile and ran `dsh plugin --profile web add dsh-pomodoro`, then restart `dsh web` |
+| No 🍅 button in the sidebar | Confirm you are on the `web` profile and ran `dsh plugin --profile web add @xiaohui-wang/dsh-pomodoro`, then restart `dsh web` |
 | System notifications never arrive | Check browser notification permission and keep the DSH page open; see [Completion feedback](#completion-feedback) |
 
 ## Links
 
-- [npm package](https://www.npmjs.com/package/dsh-pomodoro)
-- [Releases](https://github.com/causebefore/dsh-pomodoro/releases)
-- [Issue tracker](https://github.com/causebefore/dsh-pomodoro/issues)
+- [npm package](https://www.npmjs.com/package/@xiaohui-wang/dsh-pomodoro)
+- [Releases](https://github.com/istarwyh/dsh-pomodoro/releases)
+- [Issue tracker](https://github.com/istarwyh/dsh-pomodoro/issues)
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 
 ## License
@@ -181,7 +183,7 @@ Restart `dsh web` after either command.
 ### Local development
 
 ```powershell
-git clone https://github.com/causebefore/dsh-pomodoro.git
+git clone https://github.com/istarwyh/dsh-pomodoro.git
 Set-Location dsh-pomodoro
 dsh plugin --profile web add .
 npm run check
@@ -194,7 +196,7 @@ The project has no build step: `lib/client.js` is the browser bundle that is pub
 
 | Path | Responsibility |
 |---|---|
-| `lib/index.js` | Node/Cordis entry point, official settings section, and the read-only config fallback channel (GET route on current hosts / loopback RPC on older hosts) |
+| `lib/index.js` | Node/Cordis entry point, Loader-backed settings compatibility, and the read-only config fallback channel (GET route on current hosts / loopback RPC on older hosts) |
 | `lib/client.js` | Browser timer engine, React UI, slot registration, locale messages, and settings synchronization |
 | `assets/sounds/deep-ding.mp3` | Source for the CC0 completion sound; its runtime bytes are embedded in the client bundle |
 | `docs/images/` | Chinese and English README screenshots plus the GitHub Social Preview image |

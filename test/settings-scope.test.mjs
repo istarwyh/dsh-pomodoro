@@ -22,7 +22,7 @@ async function readyTab(options = {}) {
   return { environment, tab };
 }
 
-test("官方 settingsScope：保存六个字段并发布 user 层", async () => {
+test("0.1.7 configForms：原子保存六个字段并发布 user 层", async () => {
   const { tab } = await readyTab();
   const initial = tab.api.settings.getSnapshot();
   assert.equal(initial.status, "ready");
@@ -30,18 +30,18 @@ test("官方 settingsScope：保存六个字段并发布 user 层", async () => 
 
   await tab.api.settings.save(VALUE, initial.revision);
   const saved = tab.api.settings.getSnapshot();
-  assert.equal(saved.revision, 7);
+  assert.equal(saved.revision, 2);
   assert.deepEqual(saved.value, VALUE);
   assert.deepEqual(saved.user, VALUE);
   tab.dispose();
 });
 
-test("官方 settingsScope：清除覆盖后重新继承组合默认值", async () => {
+test("0.1.7 configForms：原子清除覆盖后重新继承组合默认值", async () => {
   const { tab } = await readyTab();
   await tab.api.settings.save(VALUE, 1);
-  await tab.api.settings.reset(7);
+  await tab.api.settings.reset(2);
   const reset = tab.api.settings.getSnapshot();
-  assert.equal(reset.revision, 13);
+  assert.equal(reset.revision, 3);
   assert.deepEqual(reset.user, {});
   assert.deepEqual(reset.value, {
     focusMinutes: 25,
@@ -54,29 +54,28 @@ test("官方 settingsScope：清除覆盖后重新继承组合默认值", async 
   tab.dispose();
 });
 
-test("官方 settingsScope：陈旧 revision 在写入前报告冲突", async () => {
+test("0.1.7 configForms：陈旧 revision 在写入前报告冲突", async () => {
   const { tab } = await readyTab();
   await tab.api.settings.save(VALUE, 1);
   await assert.rejects(
     () => tab.api.settings.save({ ...VALUE, focusMinutes: 60 }, 1),
-    (error) => error?.code === "SETTINGS_CONFLICT" && error.expected === 1 && error.actual === 7,
+    (error) => error?.code === "SETTINGS_CONFLICT" && error.expected === 1 && error.actual === 2,
   );
   tab.dispose();
 });
 
-test("官方 settingsScope：宿主吞掉写入失败时不误报成功", async () => {
+test("0.1.7 configForms：宿主拒绝原子写入时不误报成功或留下半提交", async () => {
   const { tab } = await readyTab({ settingsWriteRejected: "breakMinutes" });
   await assert.rejects(
     () => tab.api.settings.save(VALUE, 1),
-    (error) => error?.code === "SETTINGS_WRITE_REJECTED" && /breakMinutes/.test(error.message),
+    (error) => error?.code === "SETTINGS_WRITE_REJECTED" && /configuration/.test(error.message),
   );
   const current = tab.api.settings.getSnapshot();
-  assert.equal(current.user.focusMinutes, 50, "前一字段已由官方逐字段接口提交");
-  assert.equal(Object.prototype.hasOwnProperty.call(current.user, "breakMinutes"), false);
+  assert.equal(current.user, null);
   tab.dispose();
 });
 
-test("settingsScope 不可用时 config.read 仍让计时引擎完成降级启动", async () => {
+test("设置表单不可用时 config.read 仍让计时引擎完成降级启动", async () => {
   const { tab } = await readyTab({ settingsUnavailable: true, settingsRead: { focusMinutes: 35 } });
   assert.equal(tab.api.isRuntimeReady(), true);
   assert.equal(tab.api.getRuntimeSnapshot().totalMs, 35 * 60 * 1000);
@@ -138,7 +137,7 @@ test("GET 路由非 404 失败时不回退未注册的旧 RPC", async () => {
   tab.dispose();
 });
 
-test("只读 settingsScope 拒绝保存", async () => {
+test("只读设置表单拒绝保存", async () => {
   const { tab } = await readyTab({ settingsWritable: false });
   const snapshot = tab.api.settings.getSnapshot();
   assert.equal(snapshot.status, "ready");
@@ -147,5 +146,14 @@ test("只读 settingsScope 拒绝保存", async () => {
     () => tab.api.settings.save(VALUE, snapshot.revision),
     (error) => error?.code === "settings-read-only",
   );
+  tab.dispose();
+});
+
+test("旧 settingsScope 宿主仍可保存设置", async () => {
+  const { tab } = await readyTab({ settingsService: "settingsScope" });
+  await tab.api.settings.save(VALUE, 1);
+  const saved = tab.api.settings.getSnapshot();
+  assert.equal(saved.revision, 7);
+  assert.deepEqual(saved.user, VALUE);
   tab.dispose();
 });

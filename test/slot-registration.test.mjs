@@ -21,6 +21,12 @@ test("settings.plugin.item 只按 settings namespace 注册 keyed entry", async 
   assert.equal(typeof registration.order, "undefined");
   assert.equal(typeof registration.label, "undefined");
 
+  const rowConfig = environment.slotRegistrations
+    .find((options) => options.name === "plugins.row.config");
+  assert.ok(rowConfig, "0.1.7 Plugins row 配置入口未注册");
+  assert.equal(rowConfig.key, "dsh-pomodoro#dsh-pomodoro");
+  assert.equal(rowConfig.locale, "dsh-pomodoro");
+
   const sidebar = environment.slotRegistrations
     .find((options) => options.name === "sidebar.footer.action");
   assert.ok(sidebar, "sidebar.footer.action 未注册");
@@ -29,6 +35,26 @@ test("settings.plugin.item 只按 settings namespace 注册 keyed entry", async 
   const overlays = environment.slotRegistrations
     .filter((options) => options.name === "shell.overlay");
   assert.deepEqual(overlays.map((options) => options.id).sort(), ["pomodoro.completion", "pomodoro.panel"]);
+
+  tab.dispose();
+});
+
+test("设置服务缺席时侧栏与浮层仍注册", async () => {
+  const environment = createSharedEnvironment(100000);
+  const tab = environment.createTab({ settingsService: "none" });
+  for (let index = 0; index < 20 && !tab.api.isRuntimeReady(); index += 1) {
+    await environment.flush();
+  }
+
+  assert.ok(environment.slotRegistrations.some((options) => options.name === "sidebar.footer.action"));
+  assert.deepEqual(
+    environment.slotRegistrations
+      .filter((options) => options.name === "shell.overlay")
+      .map((options) => options.id)
+      .sort(),
+    ["pomodoro.completion", "pomodoro.panel"],
+  );
+  assert.equal(tab.api.settings.getSnapshot().status, "unavailable");
 
   tab.dispose();
 });

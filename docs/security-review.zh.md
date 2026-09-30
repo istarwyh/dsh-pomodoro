@@ -27,7 +27,7 @@ node scripts/security-scan.mjs
 
 ### L2 契约面人工核对（发布前，或 L1 规则覆盖不到的变更）
 
-- [ ] 新增/修改 RPC 端点：`/pomodoro` 仅暴露只读 `config.read`，返回的六个计时字段均为非敏感配置；不新增写端点，设置写入只经浏览器 settingsScope（revision 乐观锁）落到宿主 settings 服务。
+- [ ] 新增/修改 RPC 端点：`/pomodoro` 仅暴露只读 `config.read`，返回的六个计时字段均为非敏感配置；不新增写端点，设置写入只经浏览器设置表单（0.1.7+ `configForms` 原子 mutate / 旧宿主 `settingsScope`，均带 revision 乐观锁）落到宿主 settings 服务。
 - [ ] 新增浏览器能力（通知/音频/存储之外的新 API）：确认有用户授权门（如 `Notification.requestPermission`），无静默触发。
 - [ ] 设置文案与帮助文本不出现真实路径外的敏感信息。
 
@@ -98,6 +98,19 @@ node lib/bin.js --full <本仓库路径>
 | L4 隔离冒烟 | —（真实宿主实测替代） | 0.1.5-rc.2 全量手测见合并说明 |
 
 待办：向 DSH 上游报告 `rpc.handle` 从插件纤维不可用的回归。
+
+## 审查记录：v0.5.4（2026-09-30，DSH 0.1.7-rc.2 跟进）
+
+背景：0.1.7 移除独立 settings namespace 注册和客户端 `settingsScope`，改由 Loader entry 的 volatile `Config`、Host `settings.configure()` 与客户端 `configForms` 提供设置表单。插件原先把 `settingsScope` 列为客户端硬依赖，导致整个浏览器插件等待不存在的服务，侧栏入口也无法注册。
+
+处置：设置服务改为按能力动态绑定，计时与侧栏主体不再依赖设置服务；0.1.7 使用 `configForms.mutate()` 原子写入，旧 rc 宿主继续走 `settingsScope`。bundle row id 与旧 namespace 统一为 `dsh-pomodoro`，让 0.1.7 的 profile 配置迁移与 Plugins row 配置页指向同一 entry。
+
+| 层 | 结果 | 说明 |
+| --- | --- | --- |
+| L1 静态规则 | ✅ 0 FAIL / 0 WARN / 8 INFO | 与 0.5.3 发布面规则一致；未新增网络、文件或进程能力 |
+| L2 契约面 | ✅ | 新设置写入仅经 `configForms.mutate()`，六字段一次提交并带 revision 围栏；只读 GET 降级通道保持不变 |
+| L3 npm pack / publish dry-run | ✅ | 8 个发布文件；42.1 kB 压缩 / 141.1 kB 解压；`npm publish --dry-run` 通过 |
+| L4 隔离冒烟 | ✅ | DSH 0.1.7-rc.2 临时 Web profile：侧栏入口、浮动面板、Plugins row 配置页、25→30 分钟保存热更新、清除后恢复 25 分钟均通过 |
 
 ## 误报台账
 
