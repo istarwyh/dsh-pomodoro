@@ -74,3 +74,6 @@ jobs:
 
       - name: Publish package
         run: npm publish
+        env:
+          # Bootstrap the new package; replace with npm Trusted Publishing after the first release.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
