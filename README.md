@@ -120,7 +120,7 @@ Click the sidebar 🍅 button to open or close the panel. Drag the title bar to 
 
 ## Settings and Notifications
 
-On DSH 0.1.7+, open **Plugins → dsh-pomodoro → dsh-pomodoro → Configure**. On earlier verified rc hosts, use **Settings → Plugins → Plugin configuration → Pomodoro**.
+On newer DSH hosts, open **Plugins → dsh-pomodoro → dsh-pomodoro → Configure**. On earlier verified rc hosts, use **Settings → Plugins → Plugin configuration → Pomodoro**.
 
 | Setting | Default | Behavior |
 |---|---:|---|
