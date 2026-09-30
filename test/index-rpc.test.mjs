@@ -25,7 +25,7 @@ const field = (check, typeName) => ({
 });
 export default {
   object(shape) {
-    return (value) => {
+    const schema = (value) => {
       if (value === undefined || value === null) value = {};
       if (typeof value !== "object" || Array.isArray(value)) throw new TypeError("expected object");
       const out = {};
@@ -37,6 +37,8 @@ export default {
       }
       return out;
     };
+    schema.volatile = () => schema;
+    return schema;
   },
   natural: () => field((v) => Number.isSafeInteger(v) && v >= 0, "natural"),
   boolean: () => field((v) => typeof v === "boolean", "boolean"),
@@ -65,15 +67,21 @@ const alphaSettingsMock = `
 export class SettingsProvider {}
 `;
 
+const modernSettingsMock = `
+export class SettingsForms {}
+`;
+
 const dependencyHooks = registerHooks({
   resolve(specifier, context, nextResolve) {
     if (specifier === "@deepseek-ai/schemastery") {
       return { url: mockModuleUrl(schemasteryMock), shortCircuit: true };
     }
     if (specifier === "@deepseek-ai/dsh-settings") {
-      const source = context.parentURL?.includes("settings-api=alpha")
-        ? alphaSettingsMock
-        : legacySettingsMock;
+      const source = context.parentURL?.includes("settings-api=modern")
+        ? modernSettingsMock
+        : context.parentURL?.includes("settings-api=alpha")
+          ? alphaSettingsMock
+          : legacySettingsMock;
       return { url: mockModuleUrl(source), shortCircuit: true };
     }
     return nextResolve(specifier, context);
@@ -82,6 +90,7 @@ const dependencyHooks = registerHooks({
 
 const legacyApi = await import("../lib/index.js?settings-api=legacy");
 const alphaApi = await import("../lib/index.js?settings-api=alpha");
+const modernApi = await import("../lib/index.js?settings-api=modern");
 dependencyHooks.deregister();
 
 function createSettingsProvider(Config, initial = {}) {
@@ -123,6 +132,7 @@ function createSettingsProvider(Config, initial = {}) {
 function createContext({ provider, fetchRoutes = false } = {}) {
   const captured = { rpc: new Map(), effects: [], injected: [], fetchRoutes: [] };
   const ctx = {
+    fiber: { id: "pomodoro" },
     connection: {
       rpc: {
         handle(path, handler, options) {
@@ -160,6 +170,16 @@ function createContext({ provider, fetchRoutes = false } = {}) {
     },
   };
   return { ctx, captured };
+}
+
+function createModernSettingsProvider() {
+  return {
+    configurations: [],
+    configure(policy, owner) {
+      this.configurations.push({ policy, owner });
+      return () => {};
+    },
+  };
 }
 
 function rpcOf(captured) {
@@ -269,3 +289,28 @@ for (const [host, api] of [
     await assert.rejects(() => rpcOf(captured)("settings.save", {}), /未知端点/);
   });
 }
+
+test("0.1.7 forms API：使用 Loader volatile Config 并关闭重复自动表单", async () => {
+  const provider = createModernSettingsProvider();
+  let current = { focusMinutes: 45, autoStartFocus: true };
+  const config = { get: () => current };
+  const { ctx, captured } = createContext({ provider, fetchRoutes: true });
+
+  modernApi.apply(ctx, config);
+  assert.deepEqual(captured.injected, [["settings"]]);
+  assert.equal(captured.effects.length, 2, "配置策略与 fetch route 都应注册为 effect");
+  const disposePolicy = captured.effects[0]();
+  assert.deepEqual(provider.configurations, [{ policy: { auto: false }, owner: ctx.fiber }]);
+  assert.equal(typeof disposePolicy, "function");
+
+  const route = captured.fetchRoutes[0];
+  const initial = await route.fetch();
+  assert.deepEqual(await initial.json(), {
+    ok: true,
+    value: modernApi.Config({ focusMinutes: 45, autoStartFocus: true }),
+  });
+  current = { focusMinutes: 55, completionSound: true };
+  const updated = await (await route.fetch()).json();
+  assert.equal(updated.value.focusMinutes, 55);
+  assert.equal(updated.value.completionSound, true);
+});

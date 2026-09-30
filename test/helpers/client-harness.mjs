@@ -273,6 +273,44 @@ export function createSharedEnvironment(initialNow = 100000) {
         return settingsScope;
       },
     };
+    const configForm = {
+      getSnapshot() { return settingsSnapshot; },
+      subscribe(listener) {
+        settingsListeners.add(listener);
+        return () => settingsListeners.delete(listener);
+      },
+      async mutate(ops, expectedRevision) {
+        if (settingsSnapshot.status !== "ready" || !settingsSnapshot.writable) return false;
+        if (expectedRevision !== undefined && expectedRevision !== settingsSnapshot.revision) return false;
+        if (ops.some((op) => shouldRejectSettingsWrite(op.path?.[0]))) return false;
+        const nextUser = { ...(settingsUser ?? {}) };
+        const nextValue = { ...settingsValue };
+        for (const op of ops) {
+          const field = op.path?.[0];
+          if (typeof field !== "string" || op.path.length !== 1) throw new Error(`Unexpected settings path: ${op.path}`);
+          if (op.op === "set") {
+            nextUser[field] = op.value;
+            nextValue[field] = op.value;
+          } else if (op.op === "unset") {
+            delete nextUser[field];
+            nextValue[field] = DEFAULT_SETTINGS[field];
+          } else {
+            throw new Error(`Unexpected settings operation: ${op.op}`);
+          }
+        }
+        settingsUser = nextUser;
+        settingsValue = nextValue;
+        settingsRevision += 1;
+        publishSettings();
+        return true;
+      },
+    };
+    const configForms = {
+      get(namespace) {
+        if (namespace !== "dsh-pomodoro") throw new Error(`Unexpected settings namespace: ${namespace}`);
+        return configForm;
+      },
+    };
     const connection = {
       isLoopback: options.isLoopback !== false,
       rpc: {
@@ -304,9 +342,19 @@ export function createSharedEnvironment(initialNow = 100000) {
       register() { return () => {}; },
       bind() { return (key) => key; },
     };
+    const settingsServices = options.settingsService === "none"
+      ? {}
+      : options.settingsService === "settingsScope"
+        ? { settingsScope: settingsScopeBinder }
+        : { configForms };
+    const services = { slots, locale, connection, ...settingsServices };
     const ctx = {
       get(name) {
-        return { slots, locale, connection, settingsScope: settingsScopeBinder }[name];
+        return services[name];
+      },
+      inject(names, install) {
+        if (names.every((name) => Object.prototype.hasOwnProperty.call(services, name))) install(ctx);
+        return () => {};
       },
       effect(setup) {
         const dispose = setup();
